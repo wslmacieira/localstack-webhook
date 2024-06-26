@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  localstack:
+    image: localstack/localstack:2.3.0
+    environment:
+      - DATA_DIR=/tmp/localstack/data
+      - SERVICES=${SERVICES-lambda,apigateway }
+      - TZ=America/Sao_Paulo
+      - LAMBDA_EXECUTOR=docker
+      # - PROVIDER_OVERRIDE_STEPFUNCTIONS=v2
+    ports:
+      - '4566:4566'
+    volumes:
+      - /tmp/localstack:/tmp/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  # stepfunctions:
+  #   container_name: stepfunctions
+  #   image: amazon/aws-stepfunctions-local:latest
+  #   environment:
+  #     - LAMBDA_ENDPOINT=http://localstack:4566
+  #   ports:
+  #     - '8083:8083'

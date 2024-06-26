@@ -1,0 +1,24 @@
+openapi: "3.0.1"
+servers:
+  - url: "{domainName}/{basePath}"
+    variables:
+      domainName:
+        default: "https://test.com"
+      basePath:
+        default: "/testpath"
+paths:
+  "/${path}":
+    post:
+      description: "This endpoint starts execution of lambda function"
+      responses:
+        200:
+           description: "The Lambda function call was successful"
+        400:
+           description: "400 Error. Please check logs"
+        500:
+           description: "500 Error. Please check logs"
+      x-amazon-apigateway-integration:
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:000000000000:function:api/invocations"
+        passthroughBehavior: "when_no_templates"
+        httpMethod: "POST"
+        type: "AWS_PROXY"
