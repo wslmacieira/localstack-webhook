@@ -5,7 +5,7 @@ import webhooks from 'node-webhooks'
 const registerHooks = () => {
     return new webhooks({
         db: {
-            'callback_hook': ['http://localhost:4566/restapis/dbz3w685fk/07qrrclfde/_user_request_/webhook']
+            'callback_hook': ['http://localhost:4566/restapis/tj2logwf6j/x3ib40wfxp/_user_request_/ssr/api/webhook']
         }
     });
 }

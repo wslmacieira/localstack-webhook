@@ -1,6 +1,7 @@
 locals {
   modules = {
-    node: module.lambda_node
+    helloFunc: module.lambda_node_hello
+    lambdaEdge: module.lambda_edge_ssr
     gateway: module.api_gateway
   }
 }

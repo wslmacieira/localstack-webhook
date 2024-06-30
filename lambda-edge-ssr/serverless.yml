@@ -1,0 +1,29 @@
+service: lambda-edge-ssr
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  memorySize: 192
+  timeout: 10
+
+package:
+  patterns:
+    - "!/**"
+    - "node_modules/@codegenie/serverless-express/**"
+    - "dist/**"
+    - "lambda.js"
+
+functions:
+  api:
+    handler: lambda.handler
+    events:
+      - http: ANY /
+      - http: ANY /{proxy+}
+
+custom:
+  serverless-offline:
+    noPrependStageInUrl: true
+    httpPort: 4000

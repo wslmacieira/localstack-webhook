@@ -7,7 +7,7 @@ servers:
       basePath:
         default: "/testpath"
 paths:
-  "/${path}":
+  "/hello":
     post:
       description: "This endpoint starts execution of lambda function"
       responses:
@@ -18,7 +18,30 @@ paths:
         500:
            description: "500 Error. Please check logs"
       x-amazon-apigateway-integration:
-        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:000000000000:function:api/invocations"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:000000000000:function:hello/invocations"
         passthroughBehavior: "when_no_templates"
         httpMethod: "POST"
         type: "AWS_PROXY"
+  "/ssr/{proxy+}":
+    {
+      "x-amazon-apigateway-any-method":
+        {
+          "produces": ["application/json"],
+          "parameters":
+            [
+              {
+                "name": "proxy",
+                "in": "path",
+                "required": false,
+                "type": "string",
+              },
+            ],
+          "responses": {},
+          "x-amazon-apigateway-integration":
+            {
+              uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:000000000000:function:lambdassr/invocations",
+              "httpMethod": "POST",
+              "type": "aws_proxy",
+            },
+        },
+    }

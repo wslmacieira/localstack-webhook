@@ -20,6 +20,10 @@ resource "aws_api_gateway_deployment" "sfn-api-gateway-deployment" {
   stage_name  = "dev"
 }
 
-output "api_gateway_sfn_url" {
-  value = "http://localhost:4566/restapis/${aws_api_gateway_rest_api.api-gateway-sfn.id}/${aws_api_gateway_deployment.sfn-api-gateway-deployment.id}/_user_request_/${var.path}"
+output "apigateway" {
+  value = {
+    restApiID = "${aws_api_gateway_rest_api.api-gateway-sfn.id}"
+    deploymentID = "${aws_api_gateway_deployment.sfn-api-gateway-deployment.id}"
+    gatewayUrl = "http://localhost:4566/restapis/${aws_api_gateway_rest_api.api-gateway-sfn.id}/${aws_api_gateway_deployment.sfn-api-gateway-deployment.id}/_user_request_"
+  }
 }
