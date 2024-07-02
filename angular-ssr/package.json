@@ -14,7 +14,7 @@
     "build:ssr:aws": "ng build --configuration serverless && ng run my-app:server",
     "build:ssr:serverless": "ng build  && ng run my-app:serverless",
     "prerender": "ng run my-app:prerender",
-    "dev:sls": "ng build --configuration development && ng run my-app:serverless  && npm run serve:sls",
+    "dev:sls": "ng build --configuration development && ng run my-app:serverless  && npm run server:sls",
     "server:sls": "serverless offline start"
   },
   "private": true,

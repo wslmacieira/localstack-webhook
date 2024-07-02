@@ -1,10 +1,12 @@
-import 'zone.js/dist/zone-node';
+import { APP_BASE_HREF } from '@angular/common';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
-import { join } from 'path';
-import { AppServerModule } from './src/main.server';
-import { APP_BASE_HREF } from '@angular/common';
 import { existsSync } from 'fs';
+import { join } from 'path';
+import 'zone.js/dist/zone-node';
+import { AppServerModule } from './src/main.server';
+import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens'
+
 // The Express app is exported so that it can be used by serverless Functions.
 export const server = express();
 const distFolder = join(process.cwd(), 'dist/my-app/browser');
@@ -32,15 +34,18 @@ const bufferToJSONMiddleware = (req: express.Request, _res: express.Response, ne
     next();
 };
 server.post('/api/**', bufferToJSONMiddleware, (req, res) => {
-    console.log("POST", req.body)
-    // server.use(express.json())
-    // console.log({
-    //     payload: req.body
+    // console.log("POST", req.body)
+    res.render(indexHtml, {
+        req, providers: [
+            { provide: APP_BASE_HREF, useValue: req.baseUrl },
+            { provide: REQUEST, useValue: req.body },
+            { provide: 'body', useValue: req.body }
+        ]
+    });
+    // res.send({
+    //     message: "hello world!",
+    //     payload: req.body,
     // })
-    res.send({
-        message: "hello world!",
-        payload: req.body
-    })
 });
 
 // Serve static files from /browser
@@ -49,9 +54,15 @@ server.get('*.*', express.static(distFolder, {
 }));
 
 // All regular routes use the Universal engine
-server.get('*', (req, res) => {
-    console.log("GET", req.body)
-    res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
+server.get('*', bufferToJSONMiddleware, (req, res) => {
+    // console.log("GET", req.body)
+    res.render(indexHtml, {
+        req, providers: [
+            { provide: APP_BASE_HREF, useValue: req.baseUrl },
+            { provide: REQUEST, useValue: req.body },
+            { provide: 'body', useValue: req.body }
+        ]
+    });
 });
 
 export * from './src/main.server';

@@ -1,4 +1,5 @@
-@hostname = http://localhost:4566/restapis/tj2logwf6j/x3ib40wfxp/_user_request_
+# @hostname = http://localhost:4566/restapis/tj2logwf6j/x3ib40wfxp/_user_request_
+@hostname = http://[::1]:4000
 
 ###
 

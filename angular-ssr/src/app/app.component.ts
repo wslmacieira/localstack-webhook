@@ -1,6 +1,9 @@
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Component, PLATFORM_ID, inject } from '@angular/core';
+import { Component, Inject, Optional, PLATFORM_ID, inject } from '@angular/core';
 import { TransferState, makeStateKey } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { REQUEST } from '@nguniversal/express-engine/tokens';
+import { Request } from 'express';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +19,20 @@ export class AppComponent {
   browserTime?: string;
   serverTime?: string;
 
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    @Optional() @Inject(REQUEST) private req: Request,
+    @Optional() @Inject('body') private body: any
+  ) { }
+
   ngOnInit() {
     const serverTimeStateKey = makeStateKey<string>('serverTime');
+
+    // this.activatedRoute.data.subscribe(data => {
+    //   console.log("DATA: ", data)
+    // })
+    // console.log("APP COMPONENT: ", this.req.body)
+    // console.log(`BODY`, this.body);
 
     if (isPlatformBrowser(this.platformId)) {
       // set the browser time now and every second after
