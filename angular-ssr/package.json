@@ -20,6 +20,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^14.2.0",
+    "@angular/cdk": "^14.2.7",
     "@angular/common": "^14.2.0",
     "@angular/compiler": "^14.2.0",
     "@angular/core": "^14.2.0",
@@ -29,6 +30,7 @@
     "@angular/platform-server": "^14.2.0",
     "@angular/router": "^14.2.0",
     "@codegenie/serverless-express": "^4.14.1",
+    "@ng-web-apis/storage": "^4.1.2",
     "@nguniversal/express-engine": "^14.2.3",
     "aws-serverless-express": "^3.4.0",
     "express": "^4.15.2",

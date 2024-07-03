@@ -12,7 +12,9 @@ export class PostComponent {
         private activatedRoute: ActivatedRoute,
         @Optional() @Inject(REQUEST) private req: Request,
         @Optional() @Inject('body') private body: any
-    ) { }
+    ) {
+
+    }
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(data => {
