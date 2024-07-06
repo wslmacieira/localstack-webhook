@@ -13,7 +13,7 @@ import { provideLocation, provideUserAgent } from '@ng-web-apis/universal';
 export function app(): express.Express {
   const server = express();
   server.use(express.json())
-  const distFolder = join(process.cwd(), 'dist/my-app/browser');
+  const distFolder = join(process.cwd(), 'dist/app');
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/main/modules/express-engine)

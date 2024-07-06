@@ -7,7 +7,6 @@ provider:
   name: aws
   runtime: nodejs18.x
   memorySize: 192
-  stage: ssr
   timeout: 10
 
 package:
@@ -20,7 +19,6 @@ package:
 
 functions:
   api:
-    # handler: lambda-edge/lambda.handler
     handler: lambda.handler
     events:
       - http: ANY /
@@ -28,5 +26,5 @@ functions:
 
 custom:
   serverless-offline:
-    # noPrependStageInUrl: true
-    httpPort: 4000
+    noPrependStageInUrl: true
+    httpPort: 4200

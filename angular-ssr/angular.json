@@ -22,7 +22,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/my-app/browser",
+            "outputPath": "dist/app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -101,7 +101,7 @@
         "serverless": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/my-app/serverless",
+            "outputPath": "dist/serverless",
             "main": "serverless.ts",
             "tsConfig": "tsconfig.serverless.json",
             "inlineStyleLanguage": "scss"
@@ -151,7 +151,7 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/my-app/server",
+            "outputPath": "dist/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json",
             "inlineStyleLanguage": "scss"
