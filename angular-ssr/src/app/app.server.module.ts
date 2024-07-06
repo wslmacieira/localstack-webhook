@@ -13,10 +13,10 @@ import { SessionStorage } from './core/services/local-storage/session-storage';
     ServerModule,
   ],
   providers: [
-    // {
-    //   provide: BrowserStorageService,
-    //   useClass: BrowserStorageServerService,
-    // },
+    {
+      provide: BrowserStorageService,
+      useClass: BrowserStorageServerService,
+    },
     // {
     //   provide: SessionStorage,
     //   useClass: SessionStorage,

@@ -9,6 +9,7 @@ import { SessionStorage } from './core/services/local-storage/session-storage';
 import { PostComponent } from './post.component';
 import { MemoryStorage } from './core/services/local-storage/memory-storage';
 import { LocalStorage } from './core/services/local-storage/local-storage';
+import { StorageService } from '@ng-web-apis/storage';
 
 @NgModule({
   declarations: [
@@ -21,10 +22,11 @@ import { LocalStorage } from './core/services/local-storage/local-storage';
     CommonModule
   ],
   providers: [
-    // BrowserStorageService,
-    SessionStorage,
-    LocalStorage,
-    MemoryStorage
+    BrowserStorageService,
+    // SessionStorage,
+    // LocalStorage,
+    // MemoryStorage,
+    // StorageService
   ],
   bootstrap: [AppComponent]
 })
