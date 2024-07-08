@@ -18,7 +18,7 @@ package:
 
 functions:
   api:
-    handler: lambda.handler
+    handler: ../lambda-ssr/lambda.handler
     events:
       - http: ANY /
       - http: ANY /{proxy+}
@@ -26,4 +26,4 @@ functions:
 custom:
   serverless-offline:
     noPrependStageInUrl: true
-    httpPort: 4000
+    httpPort: 4200

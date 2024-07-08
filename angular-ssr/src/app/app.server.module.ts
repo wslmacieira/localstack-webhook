@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { ServerModule } from '@angular/platform-server';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppModule } from './app.module';
-import { BrowserStorageService } from './core/services/browser-storage.service';
-import { BrowserStorageServerService } from './core/services/server-storage.service';
-import { SessionStorage } from './core/services/local-storage/session-storage';
+import { ServerStateInterceptor } from './core/interceptors/server-state.interceptor';
 
 @NgModule({
   imports: [
@@ -14,13 +13,10 @@ import { SessionStorage } from './core/services/local-storage/session-storage';
   ],
   providers: [
     {
-      provide: BrowserStorageService,
-      useClass: BrowserStorageServerService,
-    },
-    // {
-    //   provide: SessionStorage,
-    //   useClass: SessionStorage,
-    // },
+      provide: HTTP_INTERCEPTORS,
+      useClass: ServerStateInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
 })

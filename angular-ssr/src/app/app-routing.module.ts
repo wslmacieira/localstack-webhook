@@ -1,22 +1,22 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { PostResolver } from './core/resolvers/post.resolver';
-import { PostComponent } from './post.component';
+import { Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 
-const routes: Routes = [
+export const APP_ROUTES: Routes = [
   {
-    path: 'api/:alias',
-    component: PostComponent,
-    resolve: {
-      post: PostResolver
-    }
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
+    path: 'home',
+    component: HomeComponent
+  },
+  {
+    path: 'flight',
+    loadChildren: () => import('./flight-booking/flight-booking.module').then((m) => m.FlightBookingModule)
+  },
+  {
+    path: '**',
+    redirectTo: ''
   }
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    initialNavigation: 'enabledBlocking'
-  })],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }

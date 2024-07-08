@@ -3,11 +3,14 @@ import 'zone.js/node';
 import { APP_BASE_HREF } from '@angular/common';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
+// import * as compression from 'compression';
 import { existsSync } from 'fs';
 import { join } from 'path';
 
+import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 import { AppServerModule } from './src/main.server';
-import { provideLocation, provideUserAgent } from '@ng-web-apis/universal';
+import { dataSubject } from 'src/app/core/interceptors/server-state.interceptor';
+// import { provideLocation, provideUserAgent } from '@ng-web-apis/universal';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -21,14 +24,29 @@ export function app(): express.Express {
     bootstrap: AppServerModule,
   }));
 
+  // Compress all HTTP responses
+  // server.use(compression());
+
   server.set('view engine', 'html');
   server.set('views', distFolder);
 
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
-  server.post('/api/**', (req, res) => {
-    console.log("POST ", req.body)
-    res.send()
+  server.post('/flight/card', (req, res) => {
+    // console.log("POST ", req.body)
+    res.render(indexHtml, {
+      req, providers: [
+        { provide: REQUEST, useValue: req },
+        { provide: RESPONSE, useValue: res },
+      ],
+    }, (err, html) => {
+      // console.log(html)
+      const observer$ = dataSubject.subscribe(
+        data => res.json(data).send()
+      )
+      // res.end()
+      observer$.unsubscribe()
+    });
   });
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {
@@ -40,8 +58,8 @@ export function app(): express.Express {
     res.render(indexHtml, {
       req, providers: [
         { provide: APP_BASE_HREF, useValue: req.baseUrl },
-        provideLocation(req),
-        provideUserAgent(req)
+        // provideLocation(req),
+        // provideUserAgent(req)
       ]
     });
   });

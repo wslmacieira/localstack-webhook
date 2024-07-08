@@ -1,0 +1,27 @@
+# Stage 0, Node, download deps & build the app
+FROM node:20-alpine as builder
+
+# set working directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+# add app
+COPY . /usr/src/app
+
+# install cli and deps
+RUN npm i -g @angular/cli
+RUN npm i --force
+
+# add .bin to $PATH
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
+ENV NODE_OPTIONS=--max-old-space-size=4096
+
+# build app & server
+RUN ng build
+RUN ng run my-app:server
+
+# expose default port
+EXPOSE 4000
+
+# start server
+CMD ["node", "/usr/src/app/dist/server/main.js"]

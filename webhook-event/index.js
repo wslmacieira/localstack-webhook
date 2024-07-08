@@ -5,7 +5,7 @@ import webhooks from 'node-webhooks'
 const registerHooks = () => {
     return new webhooks({
         db: {
-            'callback_hook': ['http://localhost:4566/restapis/tj2logwf6j/x3ib40wfxp/_user_request_/ssr/api/webhook']
+            'callback_hook': ['http://localhost:4200/flight/card']
         }
     });
 }
@@ -15,11 +15,11 @@ const app = express()
 app.use(morgan("dev"))
 app.use(express.json())
 
-app.post("/payments", async (req, res) => {
+app.post("/webhook", async (req, res) => {
     const payment = req.body
     if (payment) {
         const hooks = registerHooks();
-        hooks.trigger('callback_hook', { msg: "new payment created", data: req.body });
+        hooks.trigger('callback_hook', { msg: "new webhook", data: req.body });
     }
     return res.send({ payment })
 })
